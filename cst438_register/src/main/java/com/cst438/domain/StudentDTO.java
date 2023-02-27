@@ -33,6 +33,7 @@ public class StudentDTO {
 		Status_code = 0;
 	}
 
+	// student DTO class
 	public StudentDTO() {
 		
 		Student_id = 0;

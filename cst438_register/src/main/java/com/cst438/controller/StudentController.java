@@ -80,6 +80,7 @@ public class StudentController {
 		
 		Student studentHold = studentRepository.findByEmail(email);
 	
+		// check if the student has an hold
 		if (studentHold.getStatusCode() == 0){
 			studentHold.setStatusCode(2);	
 		}
