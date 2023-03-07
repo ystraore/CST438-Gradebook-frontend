@@ -55,13 +55,12 @@ public class StudentController {
 			StudentDTO result = createStudentDTO(savedStudent);
 			return result;
 			
-		} else {
+		} 
+		else {
 			throw  new ResponseStatusException( HttpStatus.BAD_REQUEST, "Student with email already exist.");
-		}
-		
+		}	
 	}
-	
-	
+		
 	private StudentDTO createStudentDTO(Student e) {
 		StudentDTO student1DTO = new StudentDTO();
 		student1DTO.Student_id = e.getStudent_id();
@@ -69,7 +68,6 @@ public class StudentController {
 		student1DTO.name = e.getName();
 		student1DTO.Status = e.getStatus();
 		student1DTO.Status_code = e.getStatusCode();
-		
 		
 		return student1DTO;
 	}
@@ -92,8 +90,6 @@ public class StudentController {
 		Student savedStudent = studentRepository.save(studentHold);
 		
 		StudentDTO result = createStudentDTO(savedStudent);
-		return result;
-		
+		return result;		
 	}
-
 }
