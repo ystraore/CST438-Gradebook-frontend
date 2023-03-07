@@ -31,15 +31,13 @@ import com.cst438.domain.StudentRepository;
 public class StudentController {
 	@Autowired
 	StudentRepository studentRepository;
-	
-	
+		
 	@PostMapping("/student")
 	@Transactional
 	public StudentDTO creatnewStudent( @RequestBody StudentDTO newStudent) {
 		
 		Student student = studentRepository.findByEmail(newStudent.email);
-		
-		
+				
 		// student.status
 		// = 0  ok to register
 		// != 0 hold on registration.  student.status may have reason for hold.
@@ -54,7 +52,7 @@ public class StudentController {
 						
 			StudentDTO result = createStudentDTO(savedStudent);
 			return result;
-			
+      
 		} 
 		else {
 			throw  new ResponseStatusException( HttpStatus.BAD_REQUEST, "Student with email already exist.");
@@ -67,6 +65,7 @@ public class StudentController {
 		student1DTO.email = e.getEmail();
 		student1DTO.name = e.getName();
 		student1DTO.Status = e.getStatus();
+
 		student1DTO.Status_code = e.getStatusCode();
 		
 		return student1DTO;
