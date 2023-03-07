@@ -55,10 +55,10 @@ public class StudentController {
 			StudentDTO result = createStudentDTO(savedStudent);
 			return result;
 			
-		} else {
-			throw  new ResponseStatusException( HttpStatus.BAD_REQUEST, "Student with email already exist.");
 		}
-		
+		else {
+			throw  new ResponseStatusException( HttpStatus.BAD_REQUEST, "Student with email already exist.");
+		}		
 	}
 	
 	
@@ -68,8 +68,7 @@ public class StudentController {
 		student1DTO.email = e.getEmail();
 		student1DTO.name = e.getName();
 		student1DTO.Status = e.getStatus();
-		student1DTO.Status_code = e.getStatusCode();
-		
+		student1DTO.Status_code = e.getStatusCode();	
 		
 		return student1DTO;
 	}
@@ -95,5 +94,4 @@ public class StudentController {
 		return result;
 		
 	}
-
 }
