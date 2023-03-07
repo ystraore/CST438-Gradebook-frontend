@@ -31,15 +31,13 @@ import com.cst438.domain.StudentRepository;
 public class StudentController {
 	@Autowired
 	StudentRepository studentRepository;
-	
-	
+		
 	@PostMapping("/student")
 	@Transactional
 	public StudentDTO creatnewStudent( @RequestBody StudentDTO newStudent) {
 		
 		Student student = studentRepository.findByEmail(newStudent.email);
-		
-		
+				
 		// student.status
 		// = 0  ok to register
 		// != 0 hold on registration.  student.status may have reason for hold.
