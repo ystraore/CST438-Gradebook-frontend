@@ -56,6 +56,8 @@ public class GradebookServiceMQ extends GradebookService {
 			enrollmentRepository.save(e);
 			
 			System.out.println ("Final grade update" + g.student_email + " " + courseDTOG.course_id + " " + g.grade);
+			
+//			hello check 2
 		}
 	}
 
