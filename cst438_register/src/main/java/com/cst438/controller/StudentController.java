@@ -27,11 +27,11 @@ import com.cst438.domain.StudentDTO;
 import com.cst438.domain.StudentRepository;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000", "https://registerf-cst438.herokuapp.com/"})
 
 public class StudentController {
 	@Autowired
 	StudentRepository studentRepository;
-	
 	
 	@PostMapping("/student")
 	@Transactional
@@ -41,7 +41,7 @@ public class StudentController {
 		
 		
 		// student.status
-		// = 0  ok to register
+		// = 0  okay to register
 		// != 0 hold on registration.  student.status may have reason for hold.
 		
 		if (student == null) {
