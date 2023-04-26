@@ -19,6 +19,8 @@ import com.cst438.domain.Course;
 import com.cst438.domain.CourseRepository;
 import com.cst438.domain.Enrollment;
 import com.cst438.domain.EnrollmentRepository;
+import com.cst438.domain.Student;
+import com.cst438.domain.StudentRepository;
 
 /*
  * This example shows how to use selenium testing using the web driver 
@@ -36,17 +38,17 @@ import com.cst438.domain.EnrollmentRepository;
  */
 
 @SpringBootTest
-public class EndToEndScheduleTest {
+public class EndToEndTest {
 
-	public static final String CHROME_DRIVER_FILE_LOCATION = "C:/chromedriver_win32/chromedriver.exe";
+	public static final String CHROME_DRIVER_FILE_LOCATION = "/Users/yssatraore/Documents/chromedriver_mac_arm64/chromedriver";
 
 	public static final String URL = "http://localhost:3000";
 
 	public static final String TEST_USER_EMAIL = "test@csumb.edu";
 
-	public static final int TEST_COURSE_ID = 40443; 
+	public static final String TEST_NAME = "test"; 
 
-	public static final String TEST_SEMESTER = "2021 Fall";
+	
 
 	public static final int SLEEP_DURATION = 1000; // 1 second.
 
@@ -55,28 +57,27 @@ public class EndToEndScheduleTest {
 	 * with the actual database.
 	 */
 	
-	@Autowired
-	EnrollmentRepository enrollmentRepository;
 
 	@Autowired
-	CourseRepository courseRepository;
+	StudentRepository studentRepository;
 
 	/*
 	 * Student add course TEST_COURSE_ID to schedule for 2021 Fall semester.
 	 */
 	
 	@Test
-	public void addCourseTest() throws Exception {
+	public void AddStudentTest() throws Exception {
 
 		/*
 		 * if student is already enrolled, then delete the enrollment.
 		 */
 		
-		Enrollment x = null;
+		Student x = null;
+		
 		do {
-			x = enrollmentRepository.findByEmailAndCourseId(TEST_USER_EMAIL, TEST_COURSE_ID);
+			x = studentRepository.findByEmail(TEST_USER_EMAIL);
 			if (x != null)
-				enrollmentRepository.delete(x);
+				studentRepository.delete(x);
 		} while (x != null);
 
 		// set the driver location and start driver
@@ -99,22 +100,16 @@ public class EndToEndScheduleTest {
 
 			// select the last of the radio buttons on the list of semesters page.
 			
-			WebElement we = driver.findElement(By.xpath("(//input[@type='radio'])[last()]"));
+			WebElement we = driver.findElement(By.id("AddButton"));
 			we.click();
 
+			Thread.sleep(SLEEP_DURATION);
+			
 			// Locate and click "Get Schedule" button
 			
-			driver.findElement(By.xpath("//a")).click();
-			Thread.sleep(SLEEP_DURATION);
-
-			// Locate and click "Add Course" button which is the first and only button on the page.
-			driver.findElement(By.xpath("//button")).click();
-			Thread.sleep(SLEEP_DURATION);
-
-			// enter course no and click Add button
-			
-			driver.findElement(By.xpath("//input[@name='course_id']")).sendKeys(Integer.toString(TEST_COURSE_ID));
-			driver.findElement(By.xpath("//button[@id='Add']")).click();
+			driver.findElement(By.id("text1")).sendKeys(TEST_NAME);
+			driver.findElement(By.id("text2")).sendKeys(TEST_USER_EMAIL);
+			driver.findElement(By.id("Add")).click();
 			Thread.sleep(SLEEP_DURATION);
 
 			/*
@@ -122,35 +117,23 @@ public class EndToEndScheduleTest {
 			* get the title of all courses listed in schedule
 			*/ 
 		
-			Course course = courseRepository.findById(TEST_COURSE_ID).get();
-			
-			List<WebElement> elements  = driver.findElements(By.xpath("//div[@data-field='title']/div[@class='MuiDataGrid-cellContent']"));
-			boolean found = false;
-			for (WebElement e : elements) {
-				System.out.println(e.getText()); // for debug
-				if (e.getText().equals(course.getTitle())) {
-					found=true;
-					break;
-				}
-			}
-			assertTrue( found, "Course added but not listed in schedule.");
-			
-			// verify that enrollment row has been inserted to database.
-			
-			Enrollment e = enrollmentRepository.findByEmailAndCourseId(TEST_USER_EMAIL, TEST_COURSE_ID);
-			assertNotNull(e, "Course enrollment not found in database.");
+			x = studentRepository.findByEmail(TEST_USER_EMAIL);
+			assertNotNull(x, "Add student not found in database.");
+			if (x != null);
+				studentRepository.delete(x);
 
+			driver.quit();
 		} catch (Exception ex) {
 			throw ex;
 		} finally {
 
 			// clean up database.
-			Enrollment e = enrollmentRepository.findByEmailAndCourseId(TEST_USER_EMAIL, TEST_COURSE_ID);
-			if (e != null)
-				enrollmentRepository.delete(e);
+			Student x = studentRepository.findByEmail(TEST_USER_EMAIL); // need to finish this method
+			if (x != null)
+				studentRepository.delete(x);
 
 			driver.quit();
 		}
-
 	}
 }
+
