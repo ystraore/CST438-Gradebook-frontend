@@ -40,11 +40,11 @@ import com.cst438.domain.StudentRepository;
 @SpringBootTest
 public class EndToEndTest {
 
-	public static final String CHROME_DRIVER_FILE_LOCATION = "/Users/yssatraore/Documents/chromedriver_mac_arm64/chromedriver";
+	public static final String CHROME_DRIVER_FILE_LOCATION = "/Users/yssatraore/Documents/chromedriver_mac64/chromedriver";
 
 	public static final String URL = "http://localhost:3000";
 
-	public static final String TEST_USER_EMAIL = "test@csumb.edu";
+	public static final String TEST_USER_EMAIL = "test1@csumb.edu";
 
 	public static final String TEST_NAME = "test"; 
 
@@ -128,13 +128,11 @@ public class EndToEndTest {
 		} finally {
 
 			 //clean up database.
-			Student x = studentRepository.findByEmail(TEST_USER_EMAIL); // need to finish this method
+			 x = studentRepository.findByEmail(TEST_USER_EMAIL); 
 			if (x != null)
 			studentRepository.delete(x);
 
 			driver.quit();
-			
-			// Hello!
 		}
 	}
 }
