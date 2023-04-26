@@ -127,12 +127,12 @@ public class EndToEndTest {
 			throw ex;
 		} finally {
 
-			// clean up database.
-//			Student x = studentRepository.findByEmail(TEST_USER_EMAIL); //// need to finish this method
-//			if (x != null)
-//				studentRepository.delete(x);
-//
-//			driver.quit();
+			 //clean up database.
+			Student x = studentRepository.findByEmail(TEST_USER_EMAIL); //// need to finish this method
+			if (x != null)
+				studentRepository.delete(x);
+
+			driver.quit();
 		}
 	}
 }
