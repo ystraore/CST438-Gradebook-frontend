@@ -130,11 +130,11 @@ public class EndToEndTest {
 			 //clean up database.
 			Student x = studentRepository.findByEmail(TEST_USER_EMAIL); // need to finish this method
 			if (x != null)
-				studentRepository.delete(x);
+			studentRepository.delete(x);
 
 			driver.quit();
 			
-			// hello!
+			// Hello!
 		}
 	}
 }
